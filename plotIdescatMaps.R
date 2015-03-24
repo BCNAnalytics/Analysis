@@ -8,6 +8,12 @@ if( !require(classInt) ){
   install.packages('classInt')
 }
 
+if( !require(BcnDataAccess) ){
+  devtools::install_git('https://github.com/BCNAnalytics/BcnDataAccess')
+}
+
+
+
 idescat250 <- BcnDataSources$Idescat$Grid250_2001$Map250_2001$getMap()
 
 # plot( idescat250 )
@@ -17,7 +23,10 @@ idescat250 <- BcnDataSources$Idescat$Grid250_2001$Map250_2001$getMap()
 IdescatMapPlot <- function (idescatShp, varName = "TOTAL", plotTitle = "Total population in Barcelona", legendTitle = "Population", classN = 5, paletteName = "Blues") {
   # paletteName from the package RColorBrewer
   dataPlot <- idescat250@data[, varName]
-  breakClass <-classIntervals(na.omit(dataPlot), n=classN-1, style="kmeans")
+  
+  dataClust <- na.omit(dataPlot)
+  dataClust <- dataClust[ dataClust > 0]
+  breakClass <-classIntervals(dataClust, n=classN-1, style="kmeans")
   # Exploring breakpoints
   # plot( breakClass, colourPalette[-1] )
   # print( breakClass )
@@ -25,6 +34,8 @@ IdescatMapPlot <- function (idescatShp, varName = "TOTAL", plotTitle = "Total po
   breakNames <- c("Empty", leglabs(breakPoints))
   
   dataPlot[ is.na( dataPlot) ] <- -1
+  dataPlot[ dataPlot == 0 ] <- -1
+  
   
   # For placing the text: idescat250@bbox
   
