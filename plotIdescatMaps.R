@@ -20,7 +20,7 @@ idescat250 <- BcnDataSources$Idescat$Grid250_2001$Map250_2001$getMap()
 # str( idescat250, max.level = 2 )
 # head( slot( idescat250, "data" ) )
 
-IdescatMapPlot <- function (idescatShp, varName = "TOTAL", plotTitle = "Total population in Barcelona", legendTitle = "Population", classN = 5, paletteName = "Blues") {
+IdescatMapPlot <- function (idescatShp, varName = "TOTAL", plotTitle = "Total population in Barcelona", legendTitle = "Population", classN = 3, paletteName = "Blues") {
   # paletteName from the package RColorBrewer
   dataPlot <- idescat250@data[, varName]
   
@@ -39,7 +39,7 @@ IdescatMapPlot <- function (idescatShp, varName = "TOTAL", plotTitle = "Total po
   
   # For placing the text: idescat250@bbox
   
-  colourPalette <- brewer.pal(classN, paletteName) 
+  colourPalette <- brewer.pal(classN+1, paletteName) 
   colorAssing <- colourPalette[findInterval(dataPlot, breakPoints, rightmost.closed = TRUE)]
   
   plot( idescatShp, col = colorAssing )
@@ -49,7 +49,7 @@ IdescatMapPlot <- function (idescatShp, varName = "TOTAL", plotTitle = "Total po
   text(x=3652337, y=2068687, legendTitle, cex=1)
   title(plotTitle)
   text(x=3670337, y=2061087, 
-       "2001 census, \n 250m grid. \n Data provided by \n Idescat.", cex=0.8, font = 3)
+       "2014 \n 'Registre de poblacio', \n 250m grid. \n Data provided by \n Idescat.", cex=0.8, font = 3)
 }
 
 # variable names
