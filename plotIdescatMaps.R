@@ -14,7 +14,7 @@ if( !require(BcnDataAccess) ){
 
 
 
-idescat250 <- BcnDataSources$Idescat$Grid250_2001$Map250_2001$getMap()
+idescat250 <- BcnDataSources$Idescat$Grid250_2014$Map250_2014$getMap()
 
 # plot( idescat250 )
 # str( idescat250, max.level = 2 )
